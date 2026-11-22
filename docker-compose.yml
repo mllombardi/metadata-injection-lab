@@ -1,0 +1,17 @@
+services:
+  labdb:
+    image: postgres:16
+    container_name: labdb
+    environment:
+      POSTGRES_PASSWORD: lab
+      POSTGRES_DB: labdb
+    ports:
+      - "5432:5432"
+    volumes:
+      # Scripts here run once, in order, on a fresh volume.
+      # Reset everything with: ./scripts/reset.sh
+      - ./sql:/docker-entrypoint-initdb.d:ro
+      - labdata:/var/lib/postgresql/data
+
+volumes:
+  labdata:
